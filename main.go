@@ -13,6 +13,8 @@ func main() {
 
     s := slack.NewClient(*token)
 
+    log.Print("Calculon is active baby!")
+
     for {
 
         m, e := s.GetMessage()
@@ -21,7 +23,6 @@ func main() {
             log.Fatal(e)
         }
 
-        log.Printf("%+v", m)
         respond(m, s)
     }
 }

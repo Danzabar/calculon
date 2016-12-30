@@ -10,8 +10,9 @@ const name = "calculon"
 
 var actions map[string]func(m slack.Message, c *slack.SlackClient)
 
-// On init
+// On init (this is like a construct)
 func init() {
+    // Create the actions map
     actions = make(map[string]func(m slack.Message, c *slack.SlackClient))
 
     // Add actions
@@ -34,6 +35,7 @@ func respond(m slack.Message, c *slack.SlackClient) {
     // At this point calculon was mentioned, so check the keywords
     for k, v := range(actions) {
         if strings.Contains(m.Text, k) {
+            // We fire the return message/action as a go routine
             go func() {
                 v(m, c)
             }()
