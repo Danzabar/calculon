@@ -2,7 +2,9 @@ package main
 
 import (
     "github.com/Danzabar/calculon/slack"
+    "github.com/Danzabar/calculon/bitbucket"
     "math/rand"
+    "fmt"
 )
 
 // Selects a random greeting and sends it back as a message
@@ -15,5 +17,34 @@ func Greeting(m slack.Message, c *slack.SlackClient) {
     }
 
     m.Text = g[rand.Intn(len(g))]
+    c.PostMessage(m)
+}
+
+// Lists open pull requests from bitbucket repo
+// @example `@calculon pull requests`
+func OpenPullRequests(m slack.Message, c *slack.SlackClient) {
+    resp := &bitbucket.PullRequest{}
+
+    err := BB.Execute("GET", `/repositories/bluetel/salesforce-ovo/pullrequests/?q=state="OPEN"&pagelen=50`, "", resp)
+
+    if err != nil {
+        m.Text = "Amateurs! I was unable to obtain a usable response from your bucket of bits"
+        c.PostMessage(m)
+        return
+    }
+
+    if resp.Size == 0 {
+        m.Text = "There are no open pull requests, you peasant"
+        c.PostMessage(m)
+        return 
+    }
+
+    m.Text = fmt.Sprintf("There are %d open pull requests!\n", resp.Size)
+
+    for _, v := range(resp.Values) {
+        m.Text += "```"
+        m.Text += fmt.Sprintf("https://bitbucket.org/bluetel/salesforce-ovo/pull-requests/%d\n``` `%s` - It has %d comments and %d tasks\n", v.Id, v.Title, v.Comments, v.Tasks)
+    }
+
     c.PostMessage(m)
 }
