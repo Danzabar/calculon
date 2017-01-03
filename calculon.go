@@ -48,5 +48,5 @@ func respond(m slack.Message, c *slack.SlackClient) {
 
 // Checks if calculon is mentioned and returns a bool
 func mentioned(text string) bool {
-    return strings.ContainsAny(text, name)
+    return strings.Contains(text, name)
 }
