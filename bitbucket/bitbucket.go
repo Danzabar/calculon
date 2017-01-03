@@ -4,6 +4,7 @@ import (
     "encoding/json"
     "net/http"
     "strings"
+    "os"
 )
 
 const API_BASE_URL = "https://bitbucket.org/api/2.0"
@@ -12,13 +13,17 @@ const API_BASE_URL = "https://bitbucket.org/api/2.0"
 type Client struct {
     User string
     Pass string
+    Owner string
+    Repo string
 }
 
 // Creates and returns a new Client pointer
-func NewClient(user string, pass string) *Client {
+func NewClient() *Client {
     return &Client {
-        User: user,
-        Pass: pass,
+        User: os.Getenv("BB_User"),
+        Pass: os.Getenv("BB_Pass"),
+        Owner: os.Getenv("BB_Owner"),
+        Repo: os.Getenv("BB_Repo"),
     }
 }
 

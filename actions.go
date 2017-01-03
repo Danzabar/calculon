@@ -25,7 +25,7 @@ func Greeting(m slack.Message, c *slack.SlackClient) {
 func OpenPullRequests(m slack.Message, c *slack.SlackClient) {
     resp := &bitbucket.PullRequest{}
 
-    err := BB.Execute("GET", `/repositories/bluetel/salesforce-ovo/pullrequests/?q=state="OPEN"&pagelen=50`, "", resp)
+    err := BB.Execute("GET", `/repositories/`+ BB.Owner +`/`+ BB.Repo +`/pullrequests/?q=state="OPEN"&pagelen=50`, "", resp)
 
     if err != nil {
         m.Text = "Amateurs! I was unable to obtain a usable response from your bucket of bits"
@@ -43,7 +43,7 @@ func OpenPullRequests(m slack.Message, c *slack.SlackClient) {
 
     for _, v := range(resp.Values) {
         m.Text += "```"
-        m.Text += fmt.Sprintf("https://bitbucket.org/bluetel/salesforce-ovo/pull-requests/%d\n``` `%s` - It has %d comments and %d tasks\n", v.Id, v.Title, v.Comments, v.Tasks)
+        m.Text += fmt.Sprintf("https://bitbucket.org/%s/%s/pull-requests/%d\n``` `%s` - It has %d comments and %d tasks\n", BB.Owner, BB.Repo, v.Id, v.Title, v.Comments, v.Tasks)
     }
 
     c.PostMessage(m)

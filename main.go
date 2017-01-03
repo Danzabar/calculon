@@ -5,7 +5,6 @@ import (
     "log"
     "github.com/Danzabar/calculon/slack"
     "github.com/Danzabar/calculon/bitbucket"
-    "os"
 )
 
 var BB *bitbucket.Client
@@ -16,7 +15,7 @@ func main() {
     flag.Parse()
 
     s := slack.NewClient(*token)
-    BB = bitbucket.NewClient(os.Getenv("BB_User"), os.Getenv("BB_Pass"))
+    BB = bitbucket.NewClient()
     log.Print("Calculon is active baby!")
 
     for {
