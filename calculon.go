@@ -38,10 +38,7 @@ func respond(m slack.Message, c *slack.SlackClient) {
     // At this point calculon was mentioned, so check the keywords
     for k, v := range(actions) {
         if strings.Contains(m.Text, k) {
-            // We fire the return message/action as a go routine
-            go func() {
-                v(m, c)
-            }()
+            v(m, c)
         }
     }
 }
