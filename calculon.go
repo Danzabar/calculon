@@ -27,6 +27,8 @@ func respond(m slack.Message, c *slack.SlackClient) {
         return
     }
 
+    m.Text = strings.ToLower(m.Text)
+
     // We only want to respond if calculon is mentioned
     if !mentioned(m.Text) {
         return
@@ -45,5 +47,5 @@ func respond(m slack.Message, c *slack.SlackClient) {
 
 // Checks if calculon is mentioned and returns a bool
 func mentioned(text string) bool {
-    return strings.Contains(text, name)
+    return strings.ContainsAny(text, name)
 }

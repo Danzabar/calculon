@@ -4,7 +4,11 @@ import (
     "flag"
     "log"
     "github.com/Danzabar/calculon/slack"
+    "github.com/ktrysmt/go-bitbucket"
+    "os"
 )
+
+var BB *bitbucket.Client
 
 func main() {
     // Flags
@@ -12,6 +16,7 @@ func main() {
     flag.Parse()
 
     s := slack.NewClient(*token)
+    BB = bitbucket.NewBasicAuth(os.Getenv("BB_User"), os.Getenv("BB_Pass"))
 
     log.Print("Calculon is active baby!")
 
@@ -19,10 +24,11 @@ func main() {
 
         m, e := s.GetMessage()
 
-        if e != nil {
-            log.Fatal(e)
+        // If there is no error from get message
+        // we respond, else we move on, there is no
+        // point throwing an error here
+        if e == nil {
+            respond(m, s)
         }
-
-        respond(m, s)
     }
 }
