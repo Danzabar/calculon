@@ -22,8 +22,6 @@ func main() {
 
         m, e := s.GetMessage()
 
-        log.Print(m)
-
         // If there is no error from get message
         // we respond, else we move on, there is no
         // point throwing an error here

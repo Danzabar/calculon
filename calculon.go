@@ -3,7 +3,6 @@ package main
 import (
     "github.com/Danzabar/calculon/slack"
     "strings"
-    "log"
 )
 
 // Constant for calculons name
@@ -30,7 +29,6 @@ func respond(m slack.Message, c *slack.SlackClient) {
     }
 
     m.Text = strings.ToLower(m.Text)
-    log.Print(m.Text)
 
     // We only want to respond if calculon is mentioned
     if !mentioned(m.Text) {
