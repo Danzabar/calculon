@@ -3,6 +3,7 @@ package main
 import (
     "github.com/Danzabar/calculon/slack"
     "strings"
+    "log"
 )
 
 // Constant for calculons name
@@ -29,6 +30,7 @@ func respond(m slack.Message, c *slack.SlackClient) {
     }
 
     m.Text = strings.ToLower(m.Text)
+    log.Print(m.Text)
 
     // We only want to respond if calculon is mentioned
     if !mentioned(m.Text) {
@@ -45,5 +47,5 @@ func respond(m slack.Message, c *slack.SlackClient) {
 
 // Checks if calculon is mentioned and returns a bool
 func mentioned(text string) bool {
-    return strings.Contains(text, name)
+    return strings.Contains(text, name) || strings.Contains(text, "<@u3krkndc5>")
 }
