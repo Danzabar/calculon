@@ -18,6 +18,7 @@ func init() {
     // Add actions
     actions["hello"] = Greeting
     actions["pull requests"] = OpenPullRequests
+    actions["who broke it"] = WhoBrokeIt
 }
 
 // Responds to a message if we deem it nessecary
