@@ -20,6 +20,19 @@ func Greeting(m slack.Message, c *slack.SlackClient) {
     c.PostMessage(m)
 }
 
+// Lists action words
+// @example `man calculon`
+func Man(m slack.Message, c *slack.SlackClient) {
+    m.Text = "So you want to know what I can do....\n ```"
+
+    for k, _ := range(actions) {
+        m.Text += fmt.Sprintf("%s\n", k)
+    }
+
+    m.Text += "```"
+    c.PostMessage(m)
+}
+
 // Lists open pull requests from bitbucket repo
 // @example `calculon pull requests`
 func OpenPullRequests(m slack.Message, c *slack.SlackClient) {

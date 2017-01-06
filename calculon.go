@@ -16,6 +16,7 @@ func init() {
     actions = make(map[string]func(m slack.Message, c *slack.SlackClient))
 
     // Add actions
+    actions["man"] = Man
     actions["hello"] = Greeting
     actions["pull requests"] = OpenPullRequests
     actions["who broke it"] = WhoBrokeIt
