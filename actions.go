@@ -23,13 +23,20 @@ func Greeting(m slack.Message, c *slack.SlackClient) {
 // Lists action words
 // @example `man calculon`
 func Man(m slack.Message, c *slack.SlackClient) {
-    m.Text = "So you want to know what I can do....\n ```"
+    m.Text = "So you want to know what I can do....\n *The following actions require my attention*\n```"
 
     for k, _ := range(actions) {
         m.Text += fmt.Sprintf("%s\n", k)
     }
 
+    m.Text += "```\n *These actions just require a keyword*\n ```"
+
+    for k, _ := range(keywords) {
+        m.Text += fmt.Sprintf("%s\n", k)
+    }
+
     m.Text += "```"
+
     c.PostMessage(m)
 }
 
