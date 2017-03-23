@@ -2,12 +2,16 @@ package main
 
 import (
     "flag"
-    "log"
-    "github.com/Danzabar/calculon/slack"
     "github.com/Danzabar/calculon/bitbucket"
+    "github.com/Danzabar/calculon/giphy"
+    "github.com/Danzabar/calculon/slack"
+    "log"
 )
 
-var BB *bitbucket.Client
+var (
+    BB  *bitbucket.Client
+    GIF *giphy.Client
+)
 
 func main() {
     // Flags
@@ -16,6 +20,8 @@ func main() {
 
     s := slack.NewClient(*token)
     BB = bitbucket.NewClient()
+    GIF = giphy.NewClient()
+
     log.Print("Calculon is active baby!")
 
     for {
