@@ -5,15 +5,15 @@ import (
     "net/http"
 )
 
-type Results struct {
-    Data []SearchItem `json:"data"`
+type Result struct {
+    Data Giphy `json:"data"`
 }
 
-func (r *Results) Deserialize(t *http.Response) {
-    json.NewDecoder(t.Body).Decode(r)
+func (r *Result) Deserialize(t *http.Response) error {
+    return json.NewDecoder(t.Body).Decode(r)
 }
 
-type SearchItem struct {
+type Giphy struct {
     Type   string `json:"type"`
     URL    string `json:"url"`
     Rating string `json:"rating"`

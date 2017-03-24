@@ -9,7 +9,7 @@ import (
 const name = "calculon"
 
 var (
-    actions map[string]func(m slack.Message, c *slack.SlackClient)
+    actions  map[string]func(m slack.Message, c *slack.SlackClient)
     keywords map[string]func(m slack.Message, c *slack.SlackClient)
 )
 
@@ -24,6 +24,7 @@ func init() {
     actions["hello"] = Greeting
     actions["pull requests"] = OpenPullRequests
     actions["who broke it"] = WhoBrokeIt
+    actions["random gif"] = RandomGif
 
     // Add Keywords
     keywords["strings"] = Strings
@@ -41,10 +42,10 @@ func respond(m slack.Message, c *slack.SlackClient) {
     m.Text = strings.ToLower(m.Text)
 
     // Check for keywords
-    for k, v := range(keywords) {
+    for k, v := range keywords {
         if strings.Contains(m.Text, k) {
             v(m, c)
-        } 
+        }
     }
 
     // We only want to respond if calculon is mentioned
@@ -53,7 +54,7 @@ func respond(m slack.Message, c *slack.SlackClient) {
     }
 
     // At this point calculon was mentioned, so check the keywords
-    for k, v := range(actions) {
+    for k, v := range actions {
         if strings.Contains(m.Text, k) {
             v(m, c)
         }

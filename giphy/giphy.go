@@ -17,19 +17,19 @@ func NewClient() *Client {
     }
 }
 
-func (g *Client) Search(q string) *Results {
-    r := &Results{}
-    resp, err := g.Request(fmt.Sprintf("gifs/search?q=%s", q))
+func (g *Client) Random() *Result {
+    r := &Result{}
+    r.Deserialize(g.Request("gifs/random"))
+    return r
+}
+
+func (g *Client) Request(uri string) *http.Response {
+    req, _ := http.NewRequest("GET", fmt.Sprintf("http://api.giphy.com/v1/%s?api_key=%s", uri, g.Token), nil)
+    resp, err := http.DefaultClient.Do(req)
 
     if err != nil {
         log.Fatal(err)
     }
 
-    r.Deserialize(resp)
-    return r
-}
-
-func (g *Client) Request(uri string) (*http.Response, error) {
-    req, _ := http.NewRequest("GET", fmt.Sprintf("http://api.giphy.com/v1/%s&api_key=%s", uri, g.Token), nil)
-    return http.DefaultClient.Do(req)
+    return resp
 }
