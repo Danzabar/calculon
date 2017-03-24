@@ -98,7 +98,7 @@ func WhoBrokeIt(m slack.Message, c *slack.SlackClient) {
 func RandomGif(m slack.Message, c *slack.SlackClient) {
     r := GIF.Random()
 
-    if r.Data.Rating == 'r' {
+    if r.Data.Rating == "r" {
         m.Text = "I'd love to show you this gif, alas its too filthy for work hours"
     } else {
         m.Text = "As requested.... " + r.Data.URL
