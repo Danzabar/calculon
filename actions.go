@@ -4,19 +4,12 @@ import (
     "fmt"
     "github.com/Danzabar/calculon/bitbucket"
     "github.com/Danzabar/calculon/slack"
-    "math/rand"
 )
 
 // Selects a random greeting and sends it back as a message
 // @example `hello calculon`
 func Greeting(m slack.Message, c *slack.SlackClient) {
-    g := [3]string{
-        "I was all of history's great acting robots: Acting Unit 0.8, Thespo-mat, David Duchovny!",
-        "Noooooooooo",
-        "I'm a washed up ham",
-    }
-
-    m.Text = g[rand.Intn(len(g))]
+    m.Text = library.RandomGreeting()
     c.PostMessage(m)
 }
 
@@ -84,10 +77,8 @@ func WhoBrokeIt(m slack.Message, c *slack.SlackClient) {
         return
     }
 
-    m.Text = "I am but a simple actor, but... I think.. "
-
     for _, v := range resp.Values {
-        m.Text += fmt.Sprintf("%s broke everything! The Shame.", v.Author.Display)
+        m.Text = fmt.Sprintf("%s %s broke everything! The Shame.", library.RandomIntro(), v.Author.Display)
     }
 
     c.PostMessage(m)

@@ -11,6 +11,7 @@ const name = "calculon"
 var (
     actions  map[string]func(m slack.Message, c *slack.SlackClient)
     keywords map[string]func(m slack.Message, c *slack.SlackClient)
+    library  *Library
 )
 
 // On init (this is like a construct)
@@ -18,6 +19,7 @@ func init() {
     // Create the actions map
     actions = make(map[string]func(m slack.Message, c *slack.SlackClient))
     keywords = make(map[string]func(m slack.Message, c *slack.SlackClient))
+    library = SetupLibrary()
 
     // Add actions
     actions["man"] = Man
